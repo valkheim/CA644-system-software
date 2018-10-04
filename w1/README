@@ -1,0 +1,70 @@
+--------------------------------------------------------------------------------
+------------------------------- Exercice 1 -------------------------------------
+--------------------------------------------------------------------------------
+
+Find all 5 letter words with an 'l' in their middle position. Use the words file
+on your Linux distribution.
+You should submit the command and the number of words that were found.
+
+ __
+
+ I used read(1) to read the words file line by line. I then selected 5 char
+ length words. On those 5 characters length words, I isolated the third and
+ checked if it was an 'l'. If so, I print it on stdout (on a subshell). I was
+ able to retrieve all the output of that subshell (extract() function) to get
+ the list wanted.
+
+--------------------------------------------------------------------------------
+------------------------------- Exercice 2 -------------------------------------
+--------------------------------------------------------------------------------
+
+Find the word with the longest sequence of consecutive vowels, i.e. 'aeiou'.
+Print out the number of vowels.
+
+ __
+
+ I read the words file the same way as in the first exercice. On each word, I
+ counted the number of consecutive vowels and keep in memory the word that has
+ the longest consecutive sequence.
+
+--------------------------------------------------------------------------------
+------------------------------- Exercice 3 -------------------------------------
+--------------------------------------------------------------------------------
+
+Generate a list of all files in the /usr/lib/ directory, including
+subdirectories, sorted by the modification date.
+
+ __
+
+ I first used ls(1) to list files in the directory but I got extra lines like
+ directories name, ... I could have filter those lines but I prefered to
+ retrieve only the necessary lines by using find(1). find(1) allows to run a
+ command on each record it found. I used ls(1) that way.
+
+--------------------------------------------------------------------------------
+------------------------------- Exercice 4 -------------------------------------
+--------------------------------------------------------------------------------
+
+Create some (more than two) files and directories using Linux commands (e.g.
+mkdir and echo). Then create an archive of these files using first gzip and then
+tar. Compare the performance of the two archivers.
+
+ __
+
+ I created a simple archive and a compressed version using gzip using tar(1).
+ Archives contains the same files randomly generated but the compressed version
+ is smaller in size.
+
+--------------------------------------------------------------------------------
+------------------------------- Exercice 5 -------------------------------------
+--------------------------------------------------------------------------------
+
+Create a C program which will read a number from stdin and will print out the
+sum of numbers from 1 to that number.
+
+ __
+
+ I read user input on stdin (fd 0), parse it as a number and compute the sum.
+ I did the IO using read(2)/write(2) (via putchar) but we could have used libc
+ function like scanf(3) and printf(3) families thanks to stdio.h
+ The program handles negative number as well.
