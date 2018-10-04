@@ -41,6 +41,7 @@ static char *shift(char const * const buf, char const * const buffer,
   return (dest);
 }
 
+/* read on fd */
 char *get_next_line(int const fd)
 {
   static char buffer[READ_SIZE];

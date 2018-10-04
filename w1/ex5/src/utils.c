@@ -1,5 +1,6 @@
 #include "ex5.h"
 
+/* checks if s is a valid number */
 int parseNumber(char const *s)
 {
   while (*s)
@@ -14,6 +15,7 @@ int parseNumber(char const *s)
   return 0;
 }
 
+/* char * number to int */
 int getnbr(char const * const s)
 {
   size_t i;
@@ -31,6 +33,7 @@ int getnbr(char const * const s)
   return sign * n;
 }
 
+/* write n on stdout */
 void putnbr(int n)
 {
   if (n < 0)
