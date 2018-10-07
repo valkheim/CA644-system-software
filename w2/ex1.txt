@@ -1,0 +1,4 @@
+sort fruits.txt
+sort -r fruits.txt
+sort fruits.txt | uniq
+sort fruits.txt | uniq -c | head -n 1 | awk '{print $2}'
