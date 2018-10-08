@@ -1,0 +1,30 @@
+# make -f Makefile.ex6
+
+CC = gcc
+RM = rm -rf
+NAME = ex5
+RULES = all clean fclean dbg re
+
+SRCS = ex5.c
+
+OBJS = $(SRCS:.c=.o)
+
+CFLAGS = -W -Wall -Werror -Wextra -Wpedantic -std=c89
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) -o $(NAME) $(OBJS) $(CFLAGS)
+
+clean:
+	$(RM) $(OBJS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+help:
+	echo "Available rules : $(NAME) $(RULES)"
+
+.PHONY: $(RULES)
