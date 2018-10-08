@@ -22,6 +22,10 @@ LC_ALL=
 00000000: 006f 006b                                .o.k
 ~/system_software/w2 > clang -Weverything ex4.c && printf "ok" | iconv -f UTF-8 -t UTF-16LE | ./a.out | xxd
 00000000: 006f 006b                                .o.k
+~/system_software/w2 > echo "ı" | iconv -f UTF-8 -t UTF-16LE | xxd
+00000000: 3101 0a00                                1...
+~/system_software/w2 > echo "ı" | iconv -f UTF-8 -t UTF-16LE | ./a.out | xxd
+00000000: 0131 000a                                .1..
 */
 
 #include <unistd.h>
