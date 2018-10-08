@@ -43,7 +43,6 @@ int main()
   /* We assume input is less than READ_SIZE bytes and BOM is not given */
   if ((nread = read(0, buffer, READ_SIZE)) == -1)
     errx(1, "Cannot read user input");
-  /* We assume that there will be an even number of bytes in the input */
   for (i = 0; i < nread && nread - i > 1 ; i += 2)
   {
     write(1, buffer+i+1, 1);
