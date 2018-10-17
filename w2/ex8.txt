@@ -1,1 +1,2 @@
+# 100/100
 zcat - | awk '{print $1}' | sort -n | uniq -c | sort -nr | head -n 10

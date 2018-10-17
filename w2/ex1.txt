@@ -1,3 +1,4 @@
+# 100/100
 sort fruits.txt
 sort -r fruits.txt
 sort fruits.txt | uniq
