@@ -1,0 +1,4 @@
+arithmetic.c: 2
+ex1.h: 0
+print.c: 2
+Makefile: 0
