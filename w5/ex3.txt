@@ -1,0 +1,7 @@
+unistd.h is an header file that provides access to the POSIX operating system API wich are largely made of syscall wraper
+118 sudo find / -name 'unistd.h' | wc -l
+/usr/include/unistd.h
+write returns an ssize_t (signed size_t)
+STDIN_FILENO	0	/* Standard input.  */
+STDOUT_FILENO	1	/* Standard output.  */
+STDERR_FILENO	2	/* Standard error output.  */
