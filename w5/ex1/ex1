@@ -1,0 +1,123 @@
+================================================================================
+1. What is the size of the executable a.out firstly with the symbols and
+secondly without the symbols ?
+================================================================================
+
+~/system_software/w5/ex1 > make
+nasm -f elf64 hello.asm
+ld -o hello hello.o
+ld -o hello-strip hello.o --strip-all
+~/system_software/w5/ex1 > stat --printf="%s" hello
+9000
+~/system_software/w5/ex1 > stat --printf="%s" hello-strip
+8576
+
+The original is 9000 bytes long and the stripped one is shorter with 8576 bytes
+long.
+
+================================================================================
+2. What is the address of the _start segment ?
+================================================================================
+
+~/system_software/w5/ex1 > nm hello
+000000000040300e R __bss_start
+000000000040300e R _edata
+0000000000403010 R _end
+0000000000402000 r msg
+0000000000401000 T _start
+~/system_software/w5/ex1 > objdump -s hello
+
+hello:     format de fichier elf64-x86-64
+
+Contenu de la section .note.gnu.property :
+ 400120 04000000 10000000 05000000 474e5500  ............GNU.
+ 400130 010000c0 04000000 01000000 00000000  ................
+Contenu de la section .text :
+ 401000 b8010000 00bf0100 000048be 00204000  ..........H.. @.
+ 401010 00000000 ba0e0000 000f05b8 3c000000  ............<...
+ 401020 bf000000 000f05                      .......
+Contenu de la section .rodata :
+ 402000 48656c6c 6f2c2077 6f726c64 210a      Hello, world!.
+
+Address of _start is low in the address space, as the entrypoint, it's also
+the address of .text section.
+
+================================================================================
+3. What dynamically linked libraries does it contain ?
+================================================================================
+
+~/system_software/w5/ex1 > ldd /bin/ls
+  linux-vdso.so.1 (0x00007fff019bd000) # vdso : shared lib embedded in kernel
+  libcap.so.2 => /usr/lib/libcap.so.2 (0x00007f50f05eb000) # libcap
+  libc.so.6 => /usr/lib/libc.so.6 (0x00007f50f0427000) # libc
+  /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2
+  (0x00007f50f0851000) # elf interpretor
+~/system_software/w5/ex1 > ldd hello
+  not a dynamic executable
+
+OR using readelf -d option :
+
+~/system_software/w5/ex1 > readelf -d hello
+
+There is no dynamic section in this file.
+
+hello does not contain dll.
+
+================================================================================
+4. Use strace to determine what system calls it makes when executed.
+================================================================================
+
+~/system_software/w5/ex1 > strace ./hello
+execve("./hello", ["./hello"], 0x7fff91e01a20 /* 37 vars */) = 0
+write(1, "Hello, world!\n", 14Hello, world!
+)         = 14
+exit(0)                                 = ?
++++ exited with 0 +++
+~/system_software/w5/ex1 > env | wc -l
+37
+
+There is 3 syscalls : execve, write and exit.
+37 is the number of variables in my environnment and 14 is the length of the
+string to be displayed
+
+================================================================================
+5. The write system call has what number ?
+================================================================================
+
+We can fetch this information in man 2 syscalls but we can also find the
+definition in the headers. To find the right header that is included we can
+output gcc's preprocessing operations. Mine is /usr/include/asm/unistd_64.h
+where I can read #define __NR_write 1
+So the syscall number for write on my machine is 1. And it's the one I used on
+hello.asm
+
+================================================================================
+6. What is the file descriptor of stdout ?
+================================================================================
+
+On my /usr/include/stdio.h :
+extern FILE *stdout; /* Standard output stream.  */
+
+And
+
+/* Return the system file descriptor for STREAM.  */
+extern int fileno (FILE *__stream) __THROW __wur;
+
+stdout is a FILE * giving the output stream.
+
+In my /usr/include/unistd.h
+#define STDOUT_FILENO 1
+
+The relation between STDOUT_FILENO and stdout is given by fileno as in
+STDOUT_FILENO == fileno(stdout);
+
+The file descriptor of stdout is usually 1. But it's not always the case. In my
+headers (/usr/include/mysql/my_global.h), I can read :
+/* don't assume that STDERR_FILENO is 2, mysqld can freopen */
+#undef STDERR_FILENO
+
+The man 3 freopen says :
+"The freopen() function opens the file whose name is the string pointed to by
+pathname and associates the stream pointed to by stream with it. The original
+stream (if it exists) is closed."
+By using freopen, the original fd might be preserved but also might change.
