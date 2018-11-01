@@ -1,4 +1,5 @@
-unistd.h is an header file that provides access to the POSIX operating system API wich are largely made of syscall wraper
+unistd.h is a header file that provides access to the operating system API
+which are made of syscall wrappers.
 118 sudo find / -name 'unistd.h' | wc -l
 /usr/include/unistd.h
 write returns an ssize_t (signed size_t)

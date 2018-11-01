@@ -1,0 +1,9 @@
+execl, execlp, execle, execv, execvp, execvpe
+The  exec()  family  of functions replaces the current process image with a new
+process image.
+289
+The program is in an infinite loop because it replace itself by itself.
+This program prints its pid and then replace itself by itself. So it will print
+its pid (not changing) indefinitely.
+This process is using 100% CPU usage because creating a process is an expensive
+action with no break and we are doing it indefinitely.
