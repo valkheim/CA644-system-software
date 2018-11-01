@@ -4,4 +4,4 @@ all:
 	ld -o hello-strip hello.o --strip-all
 
 clean:
-	rm hello hello.o
+	rm hello hello.o hello-strip

@@ -1,0 +1,41 @@
+================================================================================
+1. Modify this program so that you can pass arguments to your commands.
+You can use the strtok method to split a string up into arguments.
+================================================================================
+
+I used the function splittab to split the user input on spaces. The tokens are
+stored in the args char **.
+splittab reads user input and allocates space on heap for each user token that
+is separated by a space character. It ends the array with a NULL pointer.
+
+================================================================================
+2. Point out some features that the bash shell provides which this shell doesn't.
+================================================================================
+
+My shell doesnt take care of many common features :
+- arrow controls
+- environnment
+- history
+- aliases
+- job control
+- many builtins (
+- advanced scripting features (fish)
+- pipes
+- redirections
+- file descriptor managment
+- globbing and regexes
+- signal trapping
+- autocompletion
+- colours
+
+================================================================================
+3. One feature that does not work in this shell is the "change directory"
+command. Explain why this doesn't work. Explain briefly how you would fix it.
+================================================================================
+
+The "change directory" command is a shell built-in. That means it's an hardcoded
+shell feature, not a standalone binary. However, my shell handle a dummy "cd"
+builtin by using the chdir() function (change working directory).
+cd builtin in modern shells are way more powerful (pushd/popd stack mechanism,
+the "cd -" to go to the OLDPWD pointed location, the cd without argument to go
+to the $HOME, etc).
