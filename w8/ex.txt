@@ -1,0 +1,121 @@
+################################################################################
+1. How many DNS packets are there and what is the address of the DNS server ?
+################################################################################
+
+There are 4 DNS packets. The address of the DNS I'm using is server is 9.9.9.9
+
+This can also be obtained using any dns inspector tool like dig under Query
+section (9.9.9.9#53) where 53 is the default port used by DNS. or
+cat /etc/resolv.conf
+
+################################################################################
+2. Find the first DNS packet that was sent as a result of your DNS query.
+It should contain the name of the URL queried (e.g. google.com).
+
+    a. How many bytes are there in the entire packet?
+    b. The packet has a source and a destination MAC address.
+       What is the source MAC address?
+################################################################################
+2.a|
+---+
+
+The entire packet is 70 bytes long.
+
+---+
+2.b|
+---+
+
+The source MAC address is ba:67:a1:fe:23:62
+This can also be obtained via ifconfig under Ethernet section of the right
+interface. (ether ba:67:a1:fe:23:62  txqueuelen 1000  (Ethernet))
+
+################################################################################
+3. This time examine the UDP part of the packet.
+
+    a. What does the UDP packet contain?
+################################################################################
+
+The UDP layer of the query packet contains:
+- the source port (where to answer),
+- the destination port (where to ask)
+- the length (36) of the UDP segment
+- the packet checksum to ensure integrity (must differ from 0)
+- the data section (which is where encapsulation for the DNS packet takes place)
+
+################################################################################
+4. This time examine the DNS part of the packet.
+
+    a. Explain the query part of the address.
+################################################################################
+
+The DNS layer of the query packet contains:
+- transaction ID that links a query with its response
+- flags 0x0000 0100
+    0... .... .... .... = Response: Message is a query
+    .000 0... .... .... = Opcode: Standard query (0)
+    .... ..0. .... .... = Truncated: Message is not truncated
+    .... ...1 .... .... = Recursion desired: Do query recursively
+    .... .... .0.. .... = Z: reserved (0)
+    .... .... ...0 .... = Non-authenticated data: Unacceptable
+- questions (1) is the number of requests made to the DNS server
+- ressource records (RRs) (zeroed)
+- queries (1) : google.com: type A, class IN
+    Name: google.com
+    Name Length: 10
+    Label Count: 2
+    Type: A (Host Address) (1) : A stands for IPv4 host address
+    Class: IN (0x0001) : class is a family of protocols (IN is for internet)
+
+################################################################################
+5. Find the packet that contains the response and identify where in the response
+that the IP address is located (the IP address that you were looking for when
+you issued the DNS request). Provide the values of the IP address and the offset
+in the packet where it occurred.
+################################################################################
+
+The response is packet 2 in the capture. It contains multiple IP addresses that
+are grouped in the Answers section, at the end of the DNS frame.
+
+Answers section contains:
+    google.com: type A, class IN, addr 74.125.193.113 (offset 52h)
+    google.com: type A, class IN, addr 74.125.193.139 (offset 52h+10h = 62)
+    google.com: type A, class IN, addr 74.125.193.100 (offset 52h+20h = 72h)
+    google.com: type A, class IN, addr 74.125.193.101 (offset 52h+30h = 82h)
+    google.com: type A, class IN, addr 74.125.193.102 (offset 52h+40h = 92h)
+    google.com: type A, class IN, addr 74.125.193.138 (offset 52h+50h = a2h)
+
+We can get similar records on nslookup (ip might change, maybe because of
+google's loadbalancing strategy).
+
+nslookup google.com
+[...]
+Non-authoritative answer:
+Name:  google.com
+Address: 74.125.193.100
+Name:  google.com
+Address: 74.125.193.113
+Name:  google.com
+Address: 74.125.193.102
+Name:  google.com
+Address: 74.125.193.139
+Name:  google.com
+Address: 74.125.193.101
+Name:  google.com
+Address: 74.125.193.138
+Name:  google.com
+Address: 2a00:1450:400b:c01::8a
+
+or using dig :
+
+google.com.    223  IN  A  74.125.193.138
+google.com.    223  IN  A  74.125.193.100
+google.com.    223  IN  A  74.125.193.102
+google.com.    223  IN  A  74.125.193.101
+google.com.    223  IN  A  74.125.193.139
+google.com.    223  IN  A  74.125.193.113
+
+
+################################################################################
+6. Identify three other protocols in the capture and briefly describe the
+purpose of one of those protocols.
+################################################################################

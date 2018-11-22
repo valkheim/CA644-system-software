@@ -1,0 +1,34 @@
+################################################################################
+1. Find out what these codes mean.
+################################################################################
+This flags are permission flags
+
+r = read
+w = write
+x = execute (we are allowed to execute instruction from this memory page)
+p = private
+s = shared
+
+################################################################################
+2. What types of memory have the flags r-xp and r--p and rw-p respectively?
+################################################################################
+
+r-xp might be for the text section
+r--p might be for the rodata section
+rw-p might be for the global variable and library section
+
+################################################################################
+3. Another way to view a processes memory is with the pmap utility.
+Use this to view the memory.
+Using this, or some other technique, say what is the smallest block of memory
+and the largest.
+################################################################################
+
+In this process all the a.out memory plage are the same size, 4K
+
+################################################################################
+4. There are also blocks of memory which are reserved for shared libraries
+(files with extension .so). What shared libraries are used by the program?
+################################################################################
+
+This program uses the 'libc-2.27.so' and 'ld-2.27.so' shared library

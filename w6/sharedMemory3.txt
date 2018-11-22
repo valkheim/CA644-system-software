@@ -1,0 +1,39 @@
+################################################################################
+1. What value might a reasonable (non computer scientist) expect the program
+to print? What value is printed?
+################################################################################
+
+"""
+> clang tmp.c && ./a.out
+P: 99772
+124798
+C: 127644
+127644
+"""
+
+You might expect ether 100000 or 200000, but as you can see I got 99772 and 127644
+
+
+################################################################################
+2. What is the name that is commonly applied to this phenomenon.
+################################################################################
+
+This phenomenon can be called a 'race condition'
+
+################################################################################
+3. What is the smallest possible final value that *int_ptr could have when
+both processes have finished incrementing it.
+(You may assume a completely perverse schedulaing algorithm.)
+################################################################################
+
+With the most perverse schedulaing algorithm (and a lot of bad luck)
+the value may be as low as 100000
+
+################################################################################
+4. An analogous problem may happen with a web page where different users are
+allowed to update a page. Briefly describe how this might happen.
+################################################################################
+
+The same problem happens, while a user is updating information on a page,
+an other user ask for it, in worst case scenario, the page send might by partialy
+updated (that might break the page completely)

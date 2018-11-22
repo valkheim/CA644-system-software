@@ -1,0 +1,82 @@
+################################################################################
+1. Identify two of the sources of these interrupts.
+################################################################################
+
+> watch -n0 cat /proc/interrupts
+            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7       CPU8       CPU9       CPU10      CPU11      
+   0:         13          0          0          0          0          0          0          0          0          0          0          0  IR-IO-APIC    2-edge      timer
+   1:          0          0          0          0          0       1770          0          0          0          0          0          0  IR-IO-APIC    1-edge      i8042
+   8:          0          0          0          0          0          0          1          0          0          0          0          0  IR-IO-APIC    8-edge      rtc0
+   9:          0        524          0          0          0          0          0          0          0          0          0          0  IR-IO-APIC    9-fasteoi   acpi
+  12:          0          0          0          0      84719          0          0          0          0          0          0          0  IR-IO-APIC   12-edge      i8042
+  16:          0          0          0          0          0          0          0          0          1          0          0          0  IR-IO-APIC   16-fasteoi   i801_smbus
+  20:          0          0          0          0          0          0          0          0          0          0          0          1  IR-IO-APIC   20-fasteoi   idma64.0
+ 120:          0          0          0          0          0          0          0          0          0          0          0          0  DMAR-MSI    0-edge      dmar0
+ 121:          0          0          0          0          0          0          0          0          0          0          0          0  DMAR-MSI    1-edge      dmar1
+ 122:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 475136-edge      aerdrv, pcie-dpc
+ 123:          0          0          0       5136       7993          0          0          0          0          0          0          0  IR-PCI-MSI 327680-edge      xhci_hcd
+ 124:          0      70418          0          0          0          0          0      29405          0          0          0          0  IR-PCI-MSI 376832-edge      ahci[0000:00:17.0]
+ 125:          0          0          0      51428          0          0          0          0          0       4658          0          0  IR-PCI-MSI 32768-edge      i915
+ 126:          0          0          0          0          0          0          0          0          0          0         30          0  IR-PCI-MSI 360448-edge      mei_me
+ 127:          0       1278          0          0          0          0       6508          0          0          0          0          0  IR-PCI-MSI 333824-edge      iwlwifi: default queue
+ 128:         13          0          0          0          0          0          0          0          0          0          0       1125  IR-PCI-MSI 333825-edge      iwlwifi: queue 1
+ 129:          0         36          0         21          0        359          0          0          0          0          0          0  IR-PCI-MSI 333826-edge      iwlwifi: queue 2
+ 130:          0          0        227          0        492          0          0          0          0          0          0          0  IR-PCI-MSI 333827-edge      iwlwifi: queue 3
+ 131:          0          0          0          5          0          0          0        246          0          0          0          0  IR-PCI-MSI 333828-edge      iwlwifi: queue 4
+ 132:        197          0          0          0         31          0          0          0          0          0          0          0  IR-PCI-MSI 333829-edge      iwlwifi: queue 5
+ 133:          0          0          0          0          0         61          0          0          0          0        243          0  IR-PCI-MSI 333830-edge      iwlwifi: queue 6
+ 134:          0          0          0          0          0          0         55          0          0          0          0        180  IR-PCI-MSI 333831-edge      iwlwifi: queue 7
+ 135:          0          0          0          0          0          0          0        165        103          0          0        350  IR-PCI-MSI 333832-edge      iwlwifi: queue 8
+ 136:          0          0          0          0          0          0          0          0         59        384          0          0  IR-PCI-MSI 333833-edge      iwlwifi: queue 9
+ 137:          0          0          0          3          0        184          0          0          0         70          0          0  IR-PCI-MSI 333834-edge      iwlwifi: queue 10
+ 138:          0          0          0          0          0          0          0          0          0        259         29          0  IR-PCI-MSI 333835-edge      iwlwifi: queue 11
+ 139:          0        153          0          7          0          0          0          0          0          0          0        268  IR-PCI-MSI 333836-edge      iwlwifi: queue 12
+ 140:          0          0          0         33          0          0          0          0          0          0          0          0  IR-PCI-MSI 333837-edge      iwlwifi: exception
+ 141:          0          0        757          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 514048-edge      snd_hda_intel:card0
+ 142:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 1048576-edge      enp2s0
+ 143:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 1048577-edge      enp2s0-TxRx-0
+ 144:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 1048578-edge      enp2s0-tx-1
+ 145:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 1048579-edge      enp2s0-tx-2
+ 146:          0          0          0          0          0          0          0          0          0          0          0          0  IR-PCI-MSI 1048580-edge      enp2s0-tx-3
+ NMI:          2          8          3          2          3          2          2          3          2          2          2          2   Non-maskable interrupts
+ LOC:      60954      64484      57843      80256      52719      57647      55220      59983      57595      63860      56144      58098   Local timer interrupts
+ SPU:          0          0          0          0          0          0          0          0          0          0          0          0   Spurious interrupts
+ PMI:          2          8          3          2          3          2          2          3          2          2          2          2   Performance monitoring interrupts
+ IWI:          1         30          1       5269          1          5          3          1          3        453          2          2   IRQ work interrupts
+ RTR:          0          0          0          0          0          0          0          0          0          0          0          0   APIC ICR read retries
+ RES:      10513       4311       1795       1272       1190        782        782        681       1099        739        582        604   Rescheduling interrupts
+ CAL:      33208      20763      26719      21048      39535      31229      24327      23902      20297      21898      20251      22826   Function call interrupts
+ TLB:      30244      18488      24330      18667      37261      28825      21981      22138      18187      19487      17946      20547   TLB shootdowns
+ TRM:          0          0          0          0          0          0          0          0          0          0          0          0   Thermal event interrupts
+ THR:          0          0          0          0          0          0          0          0          0          0          0          0   Threshold APIC interrupts
+ DFR:          0          0          0          0          0          0          0          0          0          0          0          0   Deferred Error APIC interrupts
+ MCE:          0          0          0          0          0          0          0          0          0          0          0          0   Machine check exceptions
+ MCP:          4          5          5          5          5          5          5          5          5          5          5          5   Machine check polls
+ HYP:          0          0          0          0          0          0          0          0          0          0          0          0   Hypervisor callback interrupts
+ ERR:          0
+ MIS:          0
+ PIN:          0          0          0          0          0          0          0          0          0          0          0          0   Posted-interrupt notification event
+ NPI:          0          0          0          0          0          0          0          0          0          0          0          0   Nested posted-interrupt event
+ PIW:          0          0          0          0          0          0          0          0          0          0          0          0   Posted-interrupt wakeup event
+
+
+IR-PCI-MSI 32768-edge      i915
+and
+iwlwifi
+
+################################################################################
+2. Find which interrupt is responsible for the keyboard.
+################################################################################
+
+IR-IO-APIC    1-edge      i8042
+
+################################################################################
+3. How many interrupts are caused when a normal key is pressed?
+################################################################################
+They are two interupt raised when a normal key is pressed (key down and key up)
+
+################################################################################
+4. How many interrupts are caused when a key is held down?
+################################################################################
+
+They are interupts raised as long as the key is pressed

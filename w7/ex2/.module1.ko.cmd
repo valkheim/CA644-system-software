@@ -1,0 +1,1 @@
+cmd_/home/valkheim/system_software/w7/ex2/module1.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds  --build-id  -o /home/valkheim/system_software/w7/ex2/module1.ko /home/valkheim/system_software/w7/ex2/module1.o /home/valkheim/system_software/w7/ex2/module1.mod.o ;  true

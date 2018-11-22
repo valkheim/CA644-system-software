@@ -1,0 +1,20 @@
+################################################################################
+1. Is this strange ?
+################################################################################
+No it is not strange
+
+################################################################################
+2. Why did this happen? (Explain very briefly, e.g. one sentence worth.)
+################################################################################
+When a program is forked every (private) memory page of the parent proccess is
+duplicated. So val has been duplicated in the child process, it does not point
+to the same phisical memory address
+
+################################################################################
+3. Print out the pointers of the val variable (i.e. the memory address of the
+val variable) in each process. How are these pointers related?
+Explain how this is possible. (In one sentence.)
+################################################################################
+Both of these pointer have the same value, it makes sense because the memory
+plages has just been duplicated, so they have the same virtual address, but
+they do not share the same phisical address

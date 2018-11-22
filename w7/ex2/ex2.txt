@@ -1,0 +1,40 @@
+~/system_software/w7/ex2 > make
+make -C /usr/src/linux-4.19.1.arch1 SUBDIRS=/home/valkheim/system_software/w7/ex2 modules
+make[1] : on entre dans le répertoire « /usr/lib/modules/4.19.1-arch1-1-ARCH/build »
+  CC [M]  /home/valkheim/system_software/w7/ex2/module1.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /home/valkheim/system_software/w7/ex2/module1.mod.o
+  LD [M]  /home/valkheim/system_software/w7/ex2/module1.ko
+make[1] : on quitte le répertoire « /usr/lib/modules/4.19.1-arch1-1-ARCH/build »
+~/system_software/w7/ex2 > sudo insmod ./module1.ko
+insmod: ERROR: could not insert module ./module1.ko: Invalid module format
+~/system_software/w7/ex2 > dmesg | tail -n 1
+[ 1675.183764] module1: disagrees about version of symbol module_layout
+
+ ... removing meta infomations ...
+
+~/system_software/w7/ex2 > make
+make -C /usr/src/linux-4.19.1.arch1 SUBDIRS=/home/valkheim/system_software/w7/ex2 modules
+make[1] : on entre dans le répertoire « /usr/lib/modules/4.19.1-arch1-1-ARCH/build »
+  CC [M]  /home/valkheim/system_software/w7/ex2/module1.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+WARNING: modpost: missing MODULE_LICENSE() in /home/valkheim/system_software/w7/ex2/module1.o
+see include/linux/module.h for more information
+  CC      /home/valkheim/system_software/w7/ex2/module1.mod.o
+  LD [M]  /home/valkheim/system_software/w7/ex2/module1.ko
+make[1] : on quitte le répertoire « /usr/lib/modules/4.19.1-arch1-1-ARCH/build »
+
+
+[ 1489.672397] module1: disagrees about version of symbol module_layout
+[ 1675.183764] module1: disagrees about version of symbol module_layout
+[ 1803.250992] module1: disagrees about version of symbol module_layout
+
+
+MODULE_LICENSE is used to tell the kernel that this modules bear a free license.
+Without such declaration, the kernel complains when the module is loaded
+
+MODULE_AUTHOR is about the people who wrote the module
+
+MODULE_DESCRIPTION is used to describe the module behaviour

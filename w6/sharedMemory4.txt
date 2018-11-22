@@ -1,0 +1,50 @@
+################################################################################
+1. Do a search for gcc atomic increment and fix the code so that it works.
+You need to change the *int_ptr = *int_ptr + 1 line each time.
+You only need to change two lines in the code.
+################################################################################
+
+I changed the line from *int_ptr = *int_ptr + 1 to __sync_add_and_fetch(int_ptr, 1);
+
+"""
+> gcc tmp.c && ./a.out
+P: 184574
+194492
+C: 200000
+200000
+"""
+
+################################################################################
+2. There are two places where the memory location is incremented.
+Each of those should be replaced with an atomic instruction to ensure that
+the program works as intended. What happens if you change the instruction
+in only one process?
+################################################################################
+If you change the instruction in only one process the same problem happen. There
+might be a race condition 
+
+"""
+> gcc tmp.c && ./a.out
+C: 109968
+123799
+P: 185689
+185689
+"""
+
+################################################################################
+3. Assume that you change only one instruction, does it make a difference
+whether you change the instruction in the child process
+or the parent process? Why or why not?
+################################################################################
+Because of the usual scheduling the parrent process run before the child so if you
+put the atomic add on the child, the parent process might finish incrementing before
+the child has a chance to, so the parent print would be at least 100000
+
+"""
+> gcc tmp.c && ./a.out
+P: 100000
+109632
+C: 189627                                                                                                                            189627
+"""
+
+But i should not be counted on

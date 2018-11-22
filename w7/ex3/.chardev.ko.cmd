@@ -1,0 +1,1 @@
+cmd_/home/valkheim/system_software/w7/ex3/chardev.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds  --build-id  -o /home/valkheim/system_software/w7/ex3/chardev.ko /home/valkheim/system_software/w7/ex3/chardev.o /home/valkheim/system_software/w7/ex3/chardev.mod.o ;  true

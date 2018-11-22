@@ -1,0 +1,128 @@
+################################################################################
+1. Are the blocks of memory returned by malloc moving up the virtual memory
+   address space or down?
+################################################################################
+
+~/system_software/w6/ex6 > gcc heap.c
+~/system_software/w6/ex6 > ./a.out
+PID = 4584
+How much to malloc: 
+
+564cdb486000-564cdb487000 r--p 00000000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb487000-564cdb488000 r-xp 00001000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb488000-564cdb489000 r--p 00002000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb489000-564cdb48a000 r--p 00002000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb48a000-564cdb48b000 rw-p 00003000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdd0c4000-564cdd0e5000 rw-p 00000000 00:00 0                          [heap]
+7f887aa68000-7f887aa8a000 r--p 00000000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887aa8a000-7f887abd5000 r-xp 00022000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887abd5000-7f887ac21000 r--p 0016d000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac21000-7f887ac22000 ---p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac22000-7f887ac26000 r--p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac26000-7f887ac28000 rw-p 001bd000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac28000-7f887ac2e000 rw-p 00000000 00:00 0
+7f887ac6a000-7f887ac6c000 r--p 00000000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac6c000-7f887ac8b000 r-xp 00002000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac8b000-7f887ac93000 r--p 00021000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac93000-7f887ac94000 r--p 00028000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac94000-7f887ac95000 rw-p 00029000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac95000-7f887ac96000 rw-p 00000000 00:00 0
+7ffce9bbf000-7ffce9be0000 rw-p 00000000 00:00 0                          [stack]
+7ffce9bf5000-7ffce9bf8000 r--p 00000000 00:00 0                          [vvar]
+7ffce9bf8000-7ffce9bfa000 r-xp 00000000 00:00 0                          [vdso]
+
+PID = 4584
+How much to malloc: 14
+ptr = 0x564cdd0c4a80 (14)
+How much to malloc:
+
+564cdb486000-564cdb487000 r--p 00000000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb487000-564cdb488000 r-xp 00001000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb488000-564cdb489000 r--p 00002000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb489000-564cdb48a000 r--p 00002000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdb48a000-564cdb48b000 rw-p 00003000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdd0c4000-564cdd0e5000 rw-p 00000000 00:00 0                          [heap]
+7f887aa68000-7f887aa8a000 r--p 00000000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887aa8a000-7f887abd5000 r-xp 00022000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887abd5000-7f887ac21000 r--p 0016d000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac21000-7f887ac22000 ---p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac22000-7f887ac26000 r--p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac26000-7f887ac28000 rw-p 001bd000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f887ac28000-7f887ac2e000 rw-p 00000000 00:00 0
+7f887ac6a000-7f887ac6c000 r--p 00000000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac6c000-7f887ac8b000 r-xp 00002000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac8b000-7f887ac93000 r--p 00021000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac93000-7f887ac94000 r--p 00028000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac94000-7f887ac95000 rw-p 00029000 08:07 2493718                    /usr/lib/ld-2.28.so
+7f887ac95000-7f887ac96000 rw-p 00000000 00:00 0
+7ffce9bbf000-7ffce9be0000 rw-p 00000000 00:00 0                          [stack]
+7ffce9bf5000-7ffce9bf8000 r--p 00000000 00:00 0                          [vvar]
+7ffce9bf8000-7ffce9bfa000 r-xp 00000000 00:00 0                          [vdso]
+
+PID = 4584
+How much to malloc: 14
+ptr = 0x564cdd0c4a80 (14)
+How much to malloc: 14
+ptr = 0x564cdd0c4aa0 (14)
+How much to malloc:
+
+ptr = 0x564cdd0c4a80 (14)
+ptr = 0x564cdd0c4aa0 (14)
+
+ptr is higher after second malloc.
+heap grows to higher addresses
+
+          +--------------+ High address
+          |     STACK    |
+          |      ||      |
+          |      \/      |
+          |   --------   | (e|r)sp
+          |              |
+          |   --------   | brk
+          |      /\      |
+          |      ||      |
+          |     HEAP     |
+          +--------------+ Low address (srbk(0))
+
+80h = 128d
+eh = 14d
+a0h = 160d
+160 - 126 = 32 (ptr size aligned malloc)
+32 - 14 = 18 (18 bytes of padding/metadata)
+
+################################################################################
+2.Which process pages does the malloc'd data belong to ?
+################################################################################
+
+It should belong to a process page with read/write permissions.
+564cdb48a000-564cdb48b000 rw-p 00003000 08:09 7486803                    /home/valkheim/system_software/w6/ex6/a.out
+564cdd0c4000-564cdd0e5000 rw-p 00000000 00:00 0                          [heap]
+
+################################################################################
+3.What happens when you allocate a chunk of memory which is larger than that
+  particular page? Explain why that happens.
+################################################################################
+
+Memory mapper allocates data in pages and relates physical addresses to virtual
+addresses. When you allocate a chunk of memory, memory mapper will use the
+appropriate amount of pages it it can.
+
+     +---------+__.     +---+             +-------+
+     |         |  |     | P |             |   P   |
+     |  HEAP   |  |_____| A |-----,     __|   H   |
+     |         |        | G |      \   /  |   Y   |
+     |         |        | E |       \ /   |   S   |
+     |  LARGE  |        +---+      __X    |   I   |
+     |         |__.     +---+     /   \   |   C   |
+     |         |  |     | P |    /     \  |   A   |
+     |         |  |_____| A |   /       \_|   L   |
+     |  CHUNK  |        | G |--/          |       |
+     |         |        | E |             |  RAM  |
+     +---------+        +---+             +-------+
+
+################################################################################
+4.(Optional) determine the relationship between the pointer address and the
+  size of the allocated memory block.
+################################################################################
+
+Address is aligned with pointer size.

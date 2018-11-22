@@ -1,0 +1,23 @@
+################################################################################
+1. Explain what happened (one sentence).
+################################################################################
+ex:
+"""
+Parent read: 5
+Child read: 5
+Child wrote: 10
+After 1s, parent read: 10
+"""
+
+We create a shared memory that is then used by both of those processes.
+Because it is shared memory if one process modify it, it is also modified for
+the other one (so be carfull of race condition)
+
+################################################################################
+2. Keep the program running (by waiting for a keypress or using an infinite
+loop so that you can see the process memory map. Note that the shared memory
+is indicated in the flags. What are the flags for the shared memory?
+(to remind you, the flags for code memory were "r-xp)"
+################################################################################
+
+The flag is rw-s

@@ -1,0 +1,45 @@
+A /proc/<pid>/maps file shows memory regions mapped by a process.
+
+> awk '{print $6}' /proc/**/maps | sort | uniq -c | sort -n | tail -n 2 | head -n 1
+2394 /usr/lib/libc-2.28.so
+> awk '/\.so/{print $6}' /proc/**/maps | sort | uniq -c | sort -n | head -n 1
+8 /usr/lib/libhogweed.so.4.4
+
+/usr/lib/libc-2.28.so is the most used
+/usr/lib/libhogweed.so.4.4 is the less used
+
+> cat /proc/**/maps | grep "/usr/lib/libc-2.28.so" | wc -l
+2406
+> cat /proc/**/maps | grep "/usr/lib/libc-2.28.so" | sort | uniq | wc -l
+372
+
+Some processes are using the code && data at the same location
+
+> cat /proc/**/maps | grep "/usr/lib/libc-2.28.so"
+[...]
+7f96546c4000-7f96546e6000 r--p 00000000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f96546e6000-7f9654831000 r-xp 00022000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f9654831000-7f965487d000 r--p 0016d000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f965487d000-7f965487e000 ---p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f965487e000-7f9654882000 r--p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f9654882000-7f9654884000 rw-p 001bd000 08:07 2493730                    /usr/lib/libc-2.28.so
+
+7f96546c4000-7f96546e6000 r--p 00000000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f96546e6000-7f9654831000 r-xp 00022000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f9654831000-7f965487d000 r--p 0016d000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f965487d000-7f965487e000 ---p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f965487e000-7f9654882000 r--p 001b9000 08:07 2493730                    /usr/lib/libc-2.28.so
+7f9654882000-7f9654884000 rw-p 001bd000 08:07 2493730                    /usr/lib/libc-2.28.so
+|_______________________|      |______|
+       1st column             3rd column
+[...]
+
+First column is the starting and ending address of the region in the process' address space.
+Third column is the offset in the file where mapping begins. If it was mapped with mmap (It's
+mostly the case for libc) (dlopen).
+
+We can observe that processes virtual mapping is different but offsets of pages remain
+the same. They are using the same libc, it's a shared object.
+
+I'm on a 64 bits machine. Adresses are in range 0-00007fffffffffff (canonical form).
+This bottom half of the virtual address space is userland.
